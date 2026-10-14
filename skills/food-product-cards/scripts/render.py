@@ -36,12 +36,19 @@ def render(data, base):
         raise ValueError('products must be a non-empty list')
     by_id = {}
     for p in products:
-        required(p, ['id', 'name', 'subtitle', 'photo', 'diagram'])
+        required(p, ['id', 'name', 'subtitle', 'photo'])
         if p['id'] in by_id:
             raise ValueError('Duplicate product id')
         by_id[p['id']] = p
         if p.get('kind', 'food') not in ('food', 'beverage'):
             raise ValueError('Unknown product kind')
+        required(p, ['cutaway'] if p.get('kind') == 'beverage' else ['diagram'])
+        if p.get('kind') == 'beverage':
+            ratio = p.get('cutaway_ratio', 0.8)
+            if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0.3 <= ratio <= 2:
+                raise ValueError('cutaway_ratio must be 0.3–2')
+            if not p.get('labels'):
+                raise ValueError('Beverage needs ingredient labels')
         sections = p.get('sections', [])
         if len(sections) != 3:
             raise ValueError('Three complete copy sections required')
@@ -86,6 +93,13 @@ def render(data, base):
         p = by_id[pid]
         labels = ''.join('<li style="top:' + str(x['y']) + '%">' + esc(x['text']) + '</li>' for x in p.get('labels', []))
         copy = ''.join('<section><h2>' + esc(x['heading']) + '</h2><h3>' + esc(x['title']) + '</h3><p>' + esc(x['body']) + '</p></section>' for x in p['sections'])
+        if p.get('kind') == 'beverage':
+            image_uri(base / p['photo'])  # Verify that the original source remains available.
+            cutaway = image_uri(base / p['cutaway'])
+            ratio = p.get('cutaway_ratio', 0.8)
+            visual = '<section class="beverage-visual" style="--cup-ratio:' + str(ratio) + '"><section class="beverage-cup"><img src="' + cutaway + '" alt="' + esc(p['name']) + '左半实拍、右半分层剖面"></section><ol class="layer-labels">' + labels + '</ol></section>'
+            pages.append('<article class="slide" id="' + esc(pid) + '">' + header(p['name'], p['subtitle']) + '<main class="beverage-grid">' + visual + '<aside class="copy">' + copy + '</aside></main></article>')
+            continue
         photo, diagram = (image_uri(base / p[k]) for k in ('photo', 'diagram'))
         pages.append('<article class="slide" id="' + esc(pid) + '">' + header(p['name'], p['subtitle']) + '<main class="cake-grid new-product"><section class="photo-frame"><img src="' + photo + '" alt="' + esc(p['name']) + '"></section><section class="diagram-wrap"><img src="' + diagram + '" alt="' + esc(p['name']) + '配图"><ol class="layer-labels">' + labels + '</ol></section><aside class="copy">' + copy + '</aside></main></article>')
     nav = '<nav class="deck-controls" aria-label="翻页"><button id="prev" aria-label="上一页">←</button><span id="counter"></span><button id="next" aria-label="下一页">→</button></nav>'

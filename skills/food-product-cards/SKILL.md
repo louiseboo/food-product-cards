@@ -1,6 +1,6 @@
 ---
 name: food-product-cards
-description: Create food product cards and launch menus from product briefs and photos, with Peet’s styling, exploded ingredient diagrams, selling points, sensory design and complete product strategy. Use for 食品产品卡、产品会汇报、菜单与新品介绍.
+description: Create food product cards and launch menus from product briefs and photos, with Peet’s styling, exploded ingredient diagrams, selling points, sensory design and complete product strategy. Use for 食品产品卡、饮品分层解读、产品会汇报、菜单与新品介绍.
 ---
 
 # Food Product Cards
@@ -25,7 +25,9 @@ Food defaults to a genuine exploded ingredient diagram beside its original photo
 
 Use the available image generation/editing tool to create diagrams from verified references. Never draw a stock shape and present it as the real product. If no generation tool is available, report that blocker and retain the original photo; do not call the card complete. Keep text labels outside the generated image for crisp typography. Align label y positions after viewing the image.
 
-For beverages, follow the user's actual beverage reference; do not apply food explosion automatically or claim a missing reference was matched. The renderer accepts an explicitly selected reference image in the second panel, but a reference-specific beverage preset requires that reference first.
+For beverages, use a single cup split vertically at its centre: the LEFT half preserves the actual product photograph, and the RIGHT half shows a clean continuous cutaway of the verified drink layers. Match the cup rim, base, perspective, scale and layer boundaries across the centre seam. Do not create two cups, two separate full images, or floating exploded layers. Retain realistic gradients, ice and cup texture on the photo half; simplify the cutaway half into legible ingredients. Put leader lines and layer explanations to the right of the cup. Keep selling points, sensory design and full strategy in the card's separate copy column.
+
+Read [beverage guidance](references/beverages.md). Use the original drink photo as an editing reference and preserve its left half. Supply the finished, unlabelled single-cup composite as `cutaway`; the renderer places external labels alongside it. `photo` remains the source asset for review and is not repeated as another full cup on the card. Never copy the example drink's recipe, origin or health claims into another product.
 
 ## Build
 

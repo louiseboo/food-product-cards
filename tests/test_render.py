@@ -23,4 +23,17 @@ class RenderTests(unittest.TestCase):
   out=m.render(self.d,self.base);self.assertLess(out.index('id="second"'),out.index('id="demo"'))
  def test_unknown_product(self):
   self.d['menu'][0]['items'][0]['product_id']='absent';self.assertRaises(ValueError,m.render,self.d,self.base)
+ def beverage(self):
+  p=self.d['products'][0];p['kind']='beverage';p['cutaway']=p.pop('diagram');return p
+ def test_beverage_single_cup(self):
+  self.beverage();out=m.render(self.d,self.base)
+  self.assertEqual(out.count('class="beverage-cup"'),1)
+  self.assertNotIn('<section class="photo-frame">',out)
+  self.assertIn('左半实拍、右半分层剖面',out)
+ def test_beverage_requires_cutaway(self):
+  p=self.beverage();del p['cutaway'];self.assertRaises(ValueError,m.render,self.d,self.base)
+ def test_beverage_requires_labels(self):
+  p=self.beverage();p['labels']=[];self.assertRaises(ValueError,m.render,self.d,self.base)
+ def test_beverage_rejects_bad_ratio(self):
+  p=self.beverage();p['cutaway_ratio']='x';self.assertRaises(ValueError,m.render,self.d,self.base)
 if __name__=='__main__': unittest.main()
