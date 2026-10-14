@@ -1,0 +1,4 @@
+interface:
+  display_name: "Food Product Cards"
+  short_description: "食品产品卡、拆层图与完整产品策略"
+  default_prompt: "Use $food-product-cards to create product cards from my brief and photos."

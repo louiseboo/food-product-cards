@@ -1,0 +1,56 @@
+{
+  "title": "食品菜单",
+  "menu_subtitle": "早餐搭配",
+  "menu": [
+    {
+      "title": "套餐加价 ¥8",
+      "items": [
+        {
+          "product_id": "demo",
+          "price": "¥22",
+          "new": true
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "demo",
+      "name": "香草蔬菜面包",
+      "subtitle": "香草、蔬菜与柔软面包的组合",
+      "photo": "whole.svg",
+      "diagram": "layers.svg",
+      "labels": [
+        {
+          "text": "面包上层",
+          "y": 20
+        },
+        {
+          "text": "香草蔬菜馅",
+          "y": 50
+        },
+        {
+          "text": "面包下层",
+          "y": 82
+        }
+      ],
+      "sections": [
+        {
+          "heading": "卖点",
+          "title": "香草 × 蔬菜",
+          "body": "香草与蔬菜搭配柔软面包，呈现清晰的植物风味。"
+        },
+        {
+          "heading": "风味口感",
+          "title": "柔软与爽脆",
+          "body": "面包承接香草香气，蔬菜增加爽脆口感。"
+        },
+        {
+          "heading": "策略",
+          "title": "建立咸口面包平台",
+          "body": "以新面包胚承接日常早餐场景，为后续不同蔬菜与酱料组合提供统一产品基础。"
+        }
+      ]
+    }
+  ]
+}
